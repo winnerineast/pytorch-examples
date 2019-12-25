@@ -54,7 +54,7 @@ struct Net : torch::nn::Module {
 
 template <typename DataLoader>
 void train(
-    int32_t epoch,
+    size_t epoch,
     Net& model,
     torch::Device device,
     DataLoader& data_loader,
@@ -99,7 +99,7 @@ void test(
                      output,
                      targets,
                      /*weight=*/{},
-                     Reduction::Sum)
+                     at::Reduction::Sum)
                      .template item<float>();
     auto pred = output.argmax(1);
     correct += pred.eq(targets).sum().template item<int64_t>();
